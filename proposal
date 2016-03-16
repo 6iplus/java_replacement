@@ -1,0 +1,9 @@
+Proposal
+Project: 
+12. Implementing Replacement Data Structures for Java
+	a.IntArrayList
+	b.DoubleArrayList
+	c.Map for String, double
+	d.Compare the speed of your classes against the library.  Make better hash 	   	  functions than java uses!
+
+
