@@ -1,0 +1,42 @@
+Project Name:Implementing Replacement Data Structures for Java
+Targets we want to achieve:
+                           IntArrayList
+                           DoubleArrayList
+                           Map for String, double
+                           Make better hash functions than java uses!
+Team members:Runxi Ding https://github.com/sunnyding602
+            Zihao Zhao https://github.com/HoweZZH
+            Xiaochen Xu https://github.com/XIaochenXu4315
+            Weiqi Wang https://github.com/sandmanseven
+IntArrayList
+    grow()
+    addFirst()
+    addLast()
+    add()
+    removeFirst()
+    removeLast()
+    isempty()
+    get()
+    contains()
+DoubleArrayList
+    grow()
+    addFirst()
+    addLast()
+    add()
+    removeFirst()
+    removeLast()
+    isempty()
+    get()
+    contains()
+Map<String,Double>
+    clear()
+    containsKey()
+    containsValue()
+    equals()
+    putAll()
+    remove()
+    size()
+These are the data structures with their APIs we want to achieve in our project.We do these things as a group,basicaly we code together.
+And the IntArrayList is been done by us.We want to design our own data structures which are faster than the java library,that is exactly 
+we want to do.
+
