@@ -93,7 +93,7 @@ public class TestLinkedListInt {
 		String pth10= "words_230k.txt";
 		double start, end, time;
 		
-		System.out.println("******Test System ArryList******");
+		System.out.println("******Test System LinkedList******”);
 		//test add function
 		start = System.currentTimeMillis();
 		LinkedList<Integer> arrlst = BuildArrayFromFile(new LinkedList<Integer>(), pth2);
@@ -119,7 +119,7 @@ public class TestLinkedListInt {
 		
 		
 		
-		System.out.println("******Test MyArryList******");
+		System.out.println("******Test MyLinkedList******”);
 		//test add function
 		start = System.currentTimeMillis();
 		LinkedListInt marlst = BuildArrayFromFile(new LinkedListInt(),pth2);
