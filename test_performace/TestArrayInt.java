@@ -1,15 +1,18 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class TestArrayInt {
 	
-	
+	/**
+	 * test add function performance
+	 * @param arr array to be test
+	 * @param filename the filename of test date 
+	 * @return array
+	 * @throws FileNotFoundException
+	 */
 	public static ArrayListInt BuildArrayFromFile(ArrayListInt arr,String filename) throws FileNotFoundException{
 		
 		Scanner sc=new Scanner(new FileReader(filename));
@@ -31,6 +34,35 @@ public class TestArrayInt {
 		}
 		if(sc!=null) sc.close();
 		return arr;
+	}
+	/*
+	 * test get function performace
+	 */
+	public static void TestGet(ArrayList<Integer> arr){
+		int len=arr.size();
+		Random rb=new Random(1);//use same seed
+		for(int i=0;i<len;i++){
+			arr.get(rb.nextInt(len));
+		}
+	}
+	public static void TestGet(ArrayListInt arr){
+		int len=arr.size();
+		Random rb=new Random(1);//use same seed
+		for(int i=0;i<len;i++){
+			arr.get(rb.nextInt(len));
+		}
+	}
+	public static void TestRemove(ArrayList<Integer> arr){
+		int len=arr.size();
+		for(int i=0;i<len;i++){
+			arr.remove(arr.size()-1);
+		}
+	}
+	public static void TestRemove(ArrayListInt arr){
+		int len=arr.size();
+		for(int i=0;i<len;i++){
+			arr.remove(arr.size()-1);
+		}
 	}
 	public static void main(String [] args) throws FileNotFoundException{
 		String pth0 = "5k_Integer.txt";
@@ -58,14 +90,14 @@ public class TestArrayInt {
 		
 		//test get function
 		start = System.currentTimeMillis();
-		arrlst.get(100);
+		TestGet(arrlst);
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Search time "+time);
 		
 		//test remove function
 		start = System.currentTimeMillis();
-		arrlst.remove(100);
+		TestRemove(arrlst);
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Remove "+time);
@@ -80,14 +112,14 @@ public class TestArrayInt {
 		
 		//test get function
 		start = System.currentTimeMillis();
-		marlst.get(100);
+		TestGet(marlst);
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Search time "+time);
 		
 		//test get function
 		start = System.currentTimeMillis();
-		marlst.remove(100);
+		TestRemove(marlst);
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Remove time "+time);
