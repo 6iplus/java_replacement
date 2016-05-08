@@ -1,157 +1,143 @@
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
-import java.util.Scanner; 
-
-public class ArrayListInt implements Iterable<Integer> {
-	private static final int DEFAULT_CAPACITY=8;
-	private int theSize;
-	private int[] theItems;
-	/**
-	 * constructor
-	 */
-	public ArrayListInt(){
-		clear();
-	}
-	/**
-	 * Removes all of the elements from this list. The list will be empty after this call returns.
-	 */
-	public void clear(){
-		theSize =0;
-		ensureCapacity(DEFAULT_CAPACITY);
-	}
-	/**
-	 * 
-	 * @return the number of elements it contains.
-	 */
-	public int size(){
-		return theSize;
-	}
-	/**
-	 * 
-	 * @return true if this list contains no elements
-	 */
-	public boolean isEmpty(){
-		return size()==0;
-	}
-	/**
-	 * Trims the capacity of this ArrayList instance to be the list's current size. 
-	 * An application can use this operation to minimize the storage of an ArrayList instance.
-	 */
-	public void trimToSize()
-	{
-		ensureCapacity(size());
-	}
-	/**
-	 * 
-	 * @param idx the index of given element in array
-	 * @return	the value for given index
-	 */
-	public int get(int idx){
-		if(idx<0||idx>=size())
-			throw new ArrayIndexOutOfBoundsException();
-		return theItems[idx];
-	}
-	/**
-	 * 
-	 * @param idx the index of given element in array
-	 * @param newVal the reset value
-	 * @return the old value
-	 */
-	public int set(int idx, int newVal)
-	{
-		if(idx<0||idx>=size())
-			throw new ArrayIndexOutOfBoundsException();
-		int old=theItems[idx];
-		theItems[idx]=newVal;
-		return old;
-	}
-	/**
-	 * 
-	 * @param newCapacity minCapacity the desired minimum capacity
-	 */
-	public void ensureCapacity(int newCapacity){
-		if(newCapacity<size())//if it less than size(),it will loss date
-			return;
-		int []old =theItems;
-		theItems=new int[newCapacity];
-		for(int i=0;i<size();i++)
-			theItems[i]=old[i];
-	}
-	/**
-	 * 
-	 * @param x element to be appended to this list
-	 * @return	true if add successfully
-	 */
-	public boolean add(int x){
-		add(size(),x);
-		return true;
-	}
-	/**
-	 * 
-	 * @param idx index at which the specified element is to be inserted
-	 * @param x element to be inserted
-	 */
-	public void add(int idx,int x){
-		if(theItems.length==size())
-			ensureCapacity(size()*2+1);
-		for(int i=theSize;i>idx;i--)
-			theItems[i]=theItems[i-1];
-		theItems[idx]=x;
-		
-		theSize++;
-	}
-	/**
-	 * 
-	 * @param idx the index of the element to be removed
-	 * @return	the element that was removed from the list
-	 */
-	public int remove(int idx){
-		int removedItem=theItems[idx];
-		for(int i=idx;i<size()-1;i++)
-			theItems[i]=theItems[i+1];
-		
-		theSize--;
-		return removedItem;
-	} 
-	/**
-	 * @return an iterator over the elements in this list in proper sequence
-	 */
-	public java.util.Iterator<Integer> iterator(){
-		return new ArrayListIterator();
-	}
+public class TestArrayInt {
 	
-	//An iterator for MyArrayList
-	private class ArrayListIterator implements java.util.Iterator<Integer>{
+	/**
+	 * test add function performance
+	 * @param arr array to be test
+	 * @param filename the filename of test date 
+	 * @return array
+	 * @throws FileNotFoundException
+	 */
+	public static ArrayListInt BuildArrayFromFile(ArrayListInt arr,String filename) throws FileNotFoundException{
 		
-		private int current =0;
-		
-		@Override
-		public boolean hasNext() {
-			
-			return current<size();
-		}
-		@Override
-		public Integer next() {
-			if(!hasNext())
-				throw new java.util.NoSuchElementException();
-			return theItems[current++];
-		}
-		public void remove(){
-			ArrayListInt.this.remove(--current);
-		}
-	}
-	
-	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		ArrayListInt arraylist = new ArrayListInt();
-		System.out.print("enter the numbers and enter any character to exit: ");
+		Scanner sc=new Scanner(new FileReader(filename));
 		while(sc.hasNextInt()){
-			int number=sc.nextInt();
-			arraylist.add(number);
+			int temp=sc.nextInt();
+			arr.add(temp);
 		}
-		sc.close();
-		System.out.println("---------result---------");
-		for(int i=(arraylist.size()-1);i>=0;i--){
-			System.out.print(arraylist.get(i)+" ");
+		if(sc!=null) sc.close();
+		return arr;
+		
+	}
+	
+	public static ArrayList<Integer> BuildArrayFromFile(ArrayList<Integer> arr,String filename) throws FileNotFoundException{
+		
+		Scanner sc=new Scanner(new FileReader(filename));
+		while(sc.hasNextInt()){
+			int temp=sc.nextInt();
+			arr.add(temp);
+		}
+		if(sc!=null) sc.close();
+		return arr;
+	}
+	/*
+	 * test get function performace
+	 */
+	public static void TestGet(ArrayList<Integer> arr){
+		int len=arr.size();
+		Random rb=new Random(1);//use same seed
+		for(int i=0;i<len;i++){
+			arr.get(rb.nextInt(len));
 		}
 	}
-}//end outer Class
+	public static void TestGet(ArrayListInt arr){
+		int len=arr.size();
+		Random rb=new Random(1);//use same seed
+		for(int i=0;i<len;i++){
+			arr.get(rb.nextInt(len));
+		}
+	}
+	/**
+	 * test removie method 
+	 * @param arr
+	 */
+	public static void TestRemove(ArrayList<Integer> arr){
+		int len=arr.size();
+		for(int i=0;i<len;i++){
+			arr.remove(arr.size()-1);
+		}
+	}
+	public static void TestRemove(ArrayListInt arr){
+		int len=arr.size();
+		for(int i=0;i<len;i++){
+			arr.remove(arr.size()-1);
+		}
+	}
+	
+	
+	
+	public static void main(String [] args) throws FileNotFoundException{
+		String pth0 = "5k_Integer.txt";
+		String pth1 = "50k_Integer.txt";
+		String pth2 = "500k_Integer.txt";
+		String pth3 = "5million_Integer.txt";
+		
+		String pth4 = "5k_Double.txt";
+		String pth5 = "50k_Doubletxt";
+		String pth6 = "500k_Double.txt";
+		String pth7 = "5million_Double.txt";
+		
+		String pth8 = "words_50k.txt";
+		String pth9 = "words_100k.txt";
+		String pth10= "words_230k.txt";
+		double start, end, time;
+		
+		System.out.println("******Test System ArryList******");
+		//test add function
+		start = System.currentTimeMillis();
+		ArrayList<Integer> arrlst = BuildArrayFromFile(new ArrayList<Integer>(), pth2);
+		end = System.currentTimeMillis();
+		time = end - start;
+		System.out.println("Set up time "+time+" milliseconds");
+		
+		//test get function
+		start = System.currentTimeMillis();
+		TestGet(arrlst);
+		end = System.currentTimeMillis();
+		time = end - start;
+		System.out.println("Search time "+time);
+		
+		
+		
+		//test remove function
+		start = System.currentTimeMillis();
+		TestRemove(arrlst);
+		end = System.currentTimeMillis();
+		time = end - start;
+		System.out.println("Remove "+time);
+		
+		
+		
+		System.out.println("******Test MyArryList******");
+		//test add function
+		start = System.currentTimeMillis();
+		ArrayListInt marlst = BuildArrayFromFile(new ArrayListInt(),pth2);
+		end = System.currentTimeMillis();
+		time = end - start;
+		System.out.println("Set up time "+time+" milliseconds");
+		
+		//test get function
+		start = System.currentTimeMillis();
+		TestGet(marlst);
+		end = System.currentTimeMillis();
+		time = end - start;
+		System.out.println("Search time "+time);
+		
+		
+		
+		//test get function
+		start = System.currentTimeMillis();
+		TestRemove(marlst);
+		end = System.currentTimeMillis();
+		time = end - start;
+		System.out.println("Remove time "+time);
+		
+		
+		
+	}
+}
