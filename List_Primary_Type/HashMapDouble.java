@@ -159,7 +159,7 @@ public class HashMapDouble{
     	return (int)(bits ^ (bits >>> 32));
     }
     
-   public static native long doubleToRawLongBits(double value);
+   
    
     private static class Entry{
     	private double key;  
