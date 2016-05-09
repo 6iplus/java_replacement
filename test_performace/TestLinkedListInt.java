@@ -1,6 +1,5 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
@@ -93,13 +92,14 @@ public class TestLinkedListInt {
 		String pth10= "words_230k.txt";
 		double start, end, time;
 		
-		System.out.println("******Test System LinkedList******”);
+		System.out.println("******Test System LinkedList******");
 		//test add function
 		start = System.currentTimeMillis();
 		LinkedList<Integer> arrlst = BuildArrayFromFile(new LinkedList<Integer>(), pth2);
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Set up time "+time+" milliseconds");
+		System.out.println("list size: "+arrlst.size());
 		
 		//test get function
 		start = System.currentTimeMillis();
@@ -116,16 +116,17 @@ public class TestLinkedListInt {
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Remove "+time);
+		System.out.println("list size: "+arrlst.size());
 		
 		
-		
-		System.out.println("******Test MyLinkedList******”);
+		System.out.println("******Test MyLinkedList******");
 		//test add function
 		start = System.currentTimeMillis();
 		LinkedListInt marlst = BuildArrayFromFile(new LinkedListInt(),pth2);
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Set up time "+time+" milliseconds");
+		System.out.println("list size: "+marlst.size());
 		
 		//test get function
 		start = System.currentTimeMillis();
@@ -141,7 +142,7 @@ public class TestLinkedListInt {
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Remove time "+time);
-		
+		System.out.println("list size: "+marlst.size());
 		
 		
 	}
