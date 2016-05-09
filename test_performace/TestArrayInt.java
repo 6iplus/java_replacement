@@ -47,6 +47,9 @@ public class TestArrayInt {
 			arr.get(rb.nextInt(len));
 		}
 	}
+	/*
+	 * test get function performace
+	 */
 	public static void TestGet(ArrayListInt arr){
 		int len=arr.size();
 		Random rb=new Random(1);//use same seed
@@ -56,21 +59,25 @@ public class TestArrayInt {
 	}
 	/**
 	 * test removie method 
-	 * @param arr
+	 * @param arr the arraylist to be test
 	 */
 	public static void TestRemove(ArrayList<Integer> arr){
 		int len=arr.size();
 		for(int i=0;i<len;i++){
 			arr.remove(arr.size()-1);
 		}
-		//System.out.println("list size: "+arr.size());
+		
 	}
+	/**
+	 * test removie method 
+	 * @param arr the arraylist to be test
+	 */
 	public static void TestRemove(ArrayListInt arr){
 		int len=arr.size();
 		for(int i=0;i<len;i++){
 			arr.remove(arr.size()-1);
 		}
-		//System.out.println("list size: "+arr.size());
+		
 	}
 	
 	
@@ -106,8 +113,6 @@ public class TestArrayInt {
 		time = end - start;
 		System.out.println("Search time "+time);
 		
-		
-		
 		//test remove function
 		start = System.currentTimeMillis();
 		TestRemove(arrlst);
@@ -115,7 +120,6 @@ public class TestArrayInt {
 		time = end - start;
 		System.out.println("Remove "+time);
 		System.out.println("list size: "+arrlst.size());
-		
 		
 		System.out.println("******Test MyArryList******");
 		//test add function
@@ -132,7 +136,6 @@ public class TestArrayInt {
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Search time "+time);
-		
 		
 		//test remove function
 		start = System.currentTimeMillis();
