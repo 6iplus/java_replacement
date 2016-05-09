@@ -286,41 +286,4 @@ public class MyHashMap<K, V> {
 
 	}
 
-	 public static void main(String[] args) throws FileNotFoundException{
-	    	FileInputStream fis = new FileInputStream("dict.txt");
-
-	    	FileInputStream fis2 = new FileInputStream("dict.dat");
-	    	Scanner scanner = new Scanner(fis);
-	    	Scanner scanner2 = new Scanner(fis2);
-	    	MyHashMap<String, Integer> map= new MyHashMap<>();
-	    	while(scanner.hasNext()){
-	    		String word = scanner.next().trim();
-	    		map.put(word, 1);
-	    	}
-
-	    	while(scanner2.hasNext()){
-	    		String word = scanner2.next().trim();
-	    		System.out.println(word + "\t" + map.containsKey(word));
-	    	}
-	    	System.out.println();
-	    	System.out.println("========histogram==========");
-	    	int[] histogram = new int[12];
-	    	for(MyHashMap.Entry entry :map.table){
-	    		if(entry != null){
-	    			int count = 0;
-	    			for( ; entry != null ; entry = entry.next){
-	    				count++;
-	    			}
-	    			if(count>=11)  count =11;
-	    			histogram[count]++;
-	    		}
-	    	}
-	    	for(int i=1 ; i<histogram.length ; i++){
-	    		System.out.println(i +"\t"+ histogram[i]);
-	    	}
-
-	    	System.out.println(map.size());
-	    	scanner.close();
-	    	scanner2.close();
-	    }
 }
