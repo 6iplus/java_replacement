@@ -145,18 +145,7 @@ public class ArrayListInt implements Iterable<Integer> {
 	}
 	
 	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		ArrayListInt arraylist = new ArrayListInt();
-		System.out.print("enter the numbers and enter any character to exit: ");
-		while(sc.hasNextInt()){
-			int number=sc.nextInt();
-			arraylist.add(number);
-		}
-		sc.close();
-		System.out.println("---------result---------");
-		for(int i=(arraylist.size()-1);i>=0;i--){
-			System.out.print(arraylist.get(i)+" ");
-		}
+	
 	}
 }
 
