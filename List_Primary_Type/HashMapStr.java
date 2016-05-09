@@ -1,206 +1,185 @@
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.List;
 
-public class TestHashStr {
-	static int count=0;
-	/**
-	 * test add function performance
-	 * @param arr array to be test
-	 * @param filename the filename of test date 
-	 * @return array
-	 * @throws FileNotFoundException
-	 */
-	public static HashMap<String,Integer> BuildMapFromFile(HashMap<String,Integer> map,String filename) throws FileNotFoundException{
-		count=0;
-		Scanner sc=new Scanner(new FileReader(filename));
-		while(sc.hasNextLine()){
-			String temp=sc.nextLine();
-            while(temp.trim().isEmpty()){
-                temp=sc.nextLine();
+public class HashMapStr{
+    private static final int DEFAULT_TABLE_SIZE=16;
+    private static final float LIMIT_FACTOR=0.75f;
+    private List<Entry> [] bucket;
+    private int currentSize;
+    public HashMapStr()
+    {
+        this(DEFAULT_TABLE_SIZE);
+    }
+    /**
+     * Construct the hash table.
+     * @param size approximate table size.
+     */
+    @SuppressWarnings("unchecked")
+    public HashMapStr(int size){
+        int capacity = 1;
+        while (capacity < size)
+             capacity <<= 1;
+        bucket=new LinkedList[capacity];
+        for(int i=0;i<bucket.length;i++)
+            bucket[i]=new LinkedList<Entry>();
+    }
+     
+    /**
+     * Insert into the hash table. if the item is
+     * already present, then do nothing.
+     * @param x the item to insert.
+     */
+    public void put(String key, int val){
+        List<Entry> EntryList = bucket[myhash(key)];
+        
+        Entry temp=new Entry(key,val);
+        if(!EntryList.contains(temp)){
+            EntryList.add(0,temp);
+            //Rehash; 
+            if(++currentSize>bucket.length*LIMIT_FACTOR)
+                rehash();
+        }
+    }
+    /**
+     * Remove from the hash table.
+     * @param key the item to remove.
+     */
+    public void remove(String key){
+        List<Entry> EntryList=bucket[myhash(key)];
+        Entry temp=new Entry(key,0);
+        if(EntryList.contains(temp)){
+            EntryList.remove(temp);
+            currentSize--;
+        }
+    }
+    /**
+     * Find an item in the hash table.
+     * @param key the item to search for.
+     * @return true if key is found. 
+     */
+    public boolean containsKey(String key){
+        List<Entry> whichList=bucket[myhash(key)];
+        Entry temp=new Entry(key,0);
+        return whichList.contains(temp);
+    }
+    public int get(String key){
+    	List<Entry> whichList=bucket[myhash(key)];
+    	for(Entry item:whichList){
+            if(item.key==key||key.equals(key))
+            	return item.getValue();
+        }
+		return -1;
+    }
+    
+    /**
+     * Find an item value in the hash table
+     * @param val whose presence in this map is to be tested
+     * @return true if this map maps one or more keys to the specified value.
+     */
+    public boolean containsValue(String val){
+    	for(int i=0;i<bucket.length;i++){
+    		List<Entry> whichlist=bucket[i];
+    		for(int j=0;j<whichlist.size();j++){
+    			if(val.equals(whichlist.get(j).getValue())){
+    				return true;
+    			}
+    		}
+    	}
+		return false;
+    }
+    /**
+     * Make the hash table logically empty.
+     */
+    public void makeEmpty(){
+        for(int i=0;i<bucket.length;i++)
+            bucket[i].clear();
+        currentSize=0;
+    }
+    /**
+     * return the words numbers in this map
+     * @return the words numbers in this map
+     */
+    public int size(){
+        return this.currentSize;
+    }
+    /**
+     * return a array view of the values contained in this map
+     * @return a array view of the values contained in this map
+     */
+    public int[] values(){
+        int[] res=new int[this.currentSize];
+        for(int i=0,j=0;i<bucket.length;i++){
+            if(bucket[i].size()!=0){
+                for(Entry item:bucket[i]){
+                    res[j++]=item.getValue();
+                }
             }
-            map.put(temp, count++);
-		}
-		if(sc!=null) sc.close();
-		return map;
-	}
-	
-	public static HashMapStr BuildMapFromFile(HashMapStr map,String filename) throws FileNotFoundException{
-		count=0;
-		Scanner sc=new Scanner(new FileReader(filename));
-		while(sc.hasNextLine()){
-			String temp=sc.nextLine();
-            while(temp.trim().isEmpty()){
-                temp=sc.nextLine();
+        }
+        return res;
+    }
+    /**
+     * return a array view of the mappings contained in this map.
+     * @return a array view of the mappings contained in this map. 
+     */
+    public Entry[] entries(){
+    	Entry[] res=new Entry[this.currentSize];
+        for(int i=0,j=0;i<bucket.length;i++){
+            if(bucket[i].size()!=0){
+                for(Entry item:bucket[i]){
+                    res[j++]=item;
+                }
             }
-            map.put(temp, count++);
-		}
-		if(sc!=null) sc.close();
-		return map;
-	}
-	/**
-	 * test containskey method
-	 * @param map
-	 * @param filename
-	 * @throws FileNotFoundException
-	 */
-	public static void TestContainsKey(HashMap<String,Integer> map,String filename) throws FileNotFoundException{
-		Scanner sc=new Scanner(new FileReader(filename));
-		while(sc.hasNextLine()){
-			String temp=sc.nextLine();
-            while(temp.trim().isEmpty()){
-                temp=sc.nextLine();
-            }
-            map.containsKey(temp);
-		}
-		if(sc!=null) sc.close();
-	}
-	public static void TestContainsKey(HashMapStr map,String filename) throws FileNotFoundException{
-		Scanner sc=new Scanner(new FileReader(filename));
-		while(sc.hasNextLine()){
-			String temp=sc.nextLine();
-            while(temp.trim().isEmpty()){
-                temp=sc.nextLine();
-            }
-		}
-		if(sc!=null) sc.close();
-	}
-	/*
-	 * test get function performace
-	 */
-	public static void TestGet(HashMap<String,Integer> map,String filename) throws FileNotFoundException{
-		Scanner sc=new Scanner(new FileReader(filename));
-		while(sc.hasNextLine()){
-			String temp=sc.nextLine();
-            while(temp.trim().isEmpty()){
-                temp=sc.nextLine();
-            }
-            map.get(temp);
-		}
-		if(sc!=null) sc.close();
-	}
-	public static void TestGet(HashMapStr map,String filename) throws FileNotFoundException{
-		Scanner sc=new Scanner(new FileReader(filename));
-		while(sc.hasNextLine()){
-			String temp=sc.nextLine();
-            while(temp.trim().isEmpty()){
-                temp=sc.nextLine();
-            }
-            map.get(temp);
-		}
-		if(sc!=null) sc.close();
-	}
-	
-	/**
-	 * test remove method 
-	 * @param arr
-	 * @throws FileNotFoundException 
-	 */
-	public static void TestRemove(HashMap<String,Integer> map,String filename) throws FileNotFoundException{
-		Scanner sc=new Scanner(new FileReader(filename));
-		while(sc.hasNextLine()){
-			String temp=sc.nextLine();
-            while(temp.trim().isEmpty()){
-                temp=sc.nextLine();
-            }
-            map.remove(temp);
-		}
-		if(sc!=null) sc.close();
-	}
-	public static void TestRemove(HashMapStr map,String filename) throws FileNotFoundException{
-		Scanner sc=new Scanner(new FileReader(filename));
-		while(sc.hasNextLine()){
-			String temp=sc.nextLine();
-            while(temp.trim().isEmpty()){
-                temp=sc.nextLine();
-            }
-            map.remove(temp);
-		}
-		if(sc!=null) sc.close();
-	}
-	
-	
-	public static void main(String [] args) throws FileNotFoundException{
-		String pth0 = "5k_Integer.txt";
-		String pth1 = "50k_Integer.txt";
-		String pth2 = "500k_Integer.txt";
-		String pth3 = "5million_Integer.txt";
-		
-		String pth4 = "5k_Double.txt";
-		String pth5 = "50k_Doubletxt";
-		String pth6 = "500k_Double.txt";
-		String pth7 = "5million_Double.txt";
-		
-		String pth8 = "words_50k.txt";
-		String pth9 = "words_100k.txt";
-		String pth10= "words_230k.txt";
-		double start, end, time;
-		
-		System.out.println("******Test System HashMap******");
-		//test add function
-		start = System.currentTimeMillis();
-		HashMap<String,Integer> sysmap = BuildMapFromFile(new HashMap<String,Integer>(), pth10);
-		end = System.currentTimeMillis();
-		time = end - start;
-		System.out.println("Set up time "+time+" milliseconds");
-		System.out.println("size "+sysmap.size());
-		
-		//test containsKey method
-		start = System.currentTimeMillis();
-		TestContainsKey(sysmap,pth10);
-		end = System.currentTimeMillis();
-		time = end - start;
-		System.out.println("contaisKey method time "+time);
-		
-		//test get function
-		start = System.currentTimeMillis();
-		TestGet(sysmap,pth10);
-		end = System.currentTimeMillis();
-		time = end - start;
-		System.out.println("get method time "+time);
-		
-		
-		//test remove function
-		start = System.currentTimeMillis();
-		TestRemove(sysmap,pth10);
-		end = System.currentTimeMillis();
-		time = end - start;
-		System.out.println("Remove "+time);
-		System.out.println("size "+sysmap.size());
-		
-		
-		System.out.println("******Test MyHashMap******");
-		//test add function
-		start = System.currentTimeMillis();
-		HashMapStr mymap = BuildMapFromFile(new HashMapStr(),pth10);
-		end = System.currentTimeMillis();
-		time = end - start;
-		System.out.println("Set up time "+time+" milliseconds");
-		System.out.println("size "+mymap.size());
-		
-		//test containsKey method
-		start = System.currentTimeMillis();
-		TestContainsKey(mymap,pth10);
-		end = System.currentTimeMillis();
-		time = end - start;
-		System.out.println("contaisKey method time "+time);
-		
-		//test get function
-		start = System.currentTimeMillis();
-		TestGet(mymap,pth10);
-		end = System.currentTimeMillis();
-		time = end - start;
-		System.out.println("get method time "+time);
-		
-		
-		//test remove function
-		start = System.currentTimeMillis();
-		TestRemove(mymap,pth10);
-		end = System.currentTimeMillis();
-		time = end - start;
-		System.out.println("Remove time "+time);
-		System.out.println("size "+mymap.size());
-		
-	}
+        }
+        return res;
+    }
+    /**
+     * Doubles the size of the hash table and rehashes all the entries.
+     */
+    @SuppressWarnings("unchecked")
+    private void rehash(){
+        List<Entry>[] oldBucket=bucket;
+        //Create new double-sized, empty table
+        bucket =new LinkedList[2*bucket.length];
+        for(int i=0;i<bucket.length;i++)
+            bucket[i]=new LinkedList<Entry>();
+        //Copy table over
+        currentSize=0;
+        for(int i=0;i<oldBucket.length;i++)
+            for(Entry item:oldBucket[i])
+                this.put(item.getKey(),item.getValue());
+         
+    }
+    private int myhash(String key){
+        int hashVal = hashCode(key);
+        return hashVal&(bucket.length-1);
+    }
+    private static int hashCode(String value) {
+        int hash = 0;
+        if (hash == 0 && value.length() > 0) {
+            char val[] = value.toCharArray();
+            for (int i = 0; i < value.length(); i++) {
+                hash = 31 * hash + val[i];
+            }	
+        }			
+        return hash;   
+    }
+    
+    private static class Entry{
+    	private String key;
+        private int value;
+        public Entry(String key,int value){this.key=key;this.value=value;}
+        public boolean equals(Object rhs){
+            return (rhs instanceof HashMapStr.Entry) && (key.equals(((Entry)rhs).key)); 
+        }
+        public int hashCode(){
+            return HashMapStr.hashCode(key);
+        }
+        public int getValue()  {return value;}
+        public String getKey() {return key;}
+    }
+    
+    public static void main(String[] args) throws FileNotFoundException{
+          
+    }
 }
