@@ -158,6 +158,6 @@ public class ArrayListInt implements Iterable<Integer> {
 			System.out.print(arraylist.get(i)+" ");
 		}
 	}
-}//end outer Class
+}
 
 
