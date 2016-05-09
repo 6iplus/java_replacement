@@ -85,6 +85,39 @@ public class MyHashMap<K, V> {
 	public boolean containsKey(Object key){
 		return getEntry(key) != null;
 	}
+	    public V remove(Object key) {
+        Entry<K,V> e = removeEntryForKey(key);
+        return (e == null ? null : e.value);
+    }
+
+
+    final Entry<K,V> removeEntryForKey(Object key) {
+        int hash = (key == null) ? 0 : hash(key.hashCode());
+        int i = indexFor(hash, table.length);
+        Entry<K,V> prev = table[i];
+        Entry<K,V> e = prev;
+
+        while (e != null) {
+            Entry<K,V> next = e.next;
+            Object k;
+            if (e.hash == hash &&
+                ((k = e.key) == key || (key != null && key.equals(k)))) {
+                modCount++;
+                size--;
+                if (prev == e)
+                    table[i] = next;
+                else
+                    prev.next = next;
+                //e.recordRemoval(this);
+                return e;
+            }
+            prev = e;
+            e = next;
+        }
+
+        return e;
+    }
+	
 
 	final  Entry<K, V> getEntry(Object key){
 		int hash = (key ==null) ? 0 : hash(key.hashCode());
