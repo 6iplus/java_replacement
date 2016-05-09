@@ -151,7 +151,7 @@ public class TestHashDouble {
 		String pth10= "words_230k.txt";
 		
 		double start, end, time;
-		System.out.println("-------Test HashMap for double-------");
+		System.out.println("------------Test HashMap for double---------------");
 		System.out.println("******Test System HashMap******");
 		//test add function
 		start = System.currentTimeMillis();
