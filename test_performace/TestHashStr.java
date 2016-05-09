@@ -56,6 +56,12 @@ public class TestHashStr {
 		}
 		if(sc!=null) sc.close();
 	}
+	/**
+	 * test containskey method
+	 * @param map
+	 * @param filename
+	 * @throws FileNotFoundException
+	 */
 	public static void TestContainsKey(HashMapStr map,String filename) throws FileNotFoundException{
 		Scanner sc=new Scanner(new FileReader(filename));
 		while(sc.hasNextLine()){
@@ -81,6 +87,9 @@ public class TestHashStr {
 		}
 		if(sc!=null) sc.close();
 	}
+	/*
+	 * test get function performace
+	 */
 	public static void TestGet(HashMapStr map,String filename) throws FileNotFoundException{
 		Scanner sc=new Scanner(new FileReader(filename));
 		while(sc.hasNextLine()){
@@ -109,6 +118,11 @@ public class TestHashStr {
 		}
 		if(sc!=null) sc.close();
 	}
+	/**
+	 * test remove method 
+	 * @param arr
+	 * @throws FileNotFoundException 
+	 */
 	public static void TestRemove(HashMapStr map,String filename) throws FileNotFoundException{
 		Scanner sc=new Scanner(new FileReader(filename));
 		while(sc.hasNextLine()){
