@@ -20,6 +20,7 @@ public class TestArrayInt {
 			int temp=sc.nextInt();
 			arr.add(temp);
 		}
+		//System.out.println("list size: "+arr.size());
 		if(sc!=null) sc.close();
 		return arr;
 		
@@ -32,6 +33,7 @@ public class TestArrayInt {
 			int temp=sc.nextInt();
 			arr.add(temp);
 		}
+		//System.out.println("list size: "+arr.size());
 		if(sc!=null) sc.close();
 		return arr;
 	}
@@ -61,14 +63,15 @@ public class TestArrayInt {
 		for(int i=0;i<len;i++){
 			arr.remove(arr.size()-1);
 		}
+		//System.out.println("list size: "+arr.size());
 	}
 	public static void TestRemove(ArrayListInt arr){
 		int len=arr.size();
 		for(int i=0;i<len;i++){
 			arr.remove(arr.size()-1);
 		}
+		//System.out.println("list size: "+arr.size());
 	}
-	
 	
 	
 	public static void main(String [] args) throws FileNotFoundException{
@@ -94,6 +97,7 @@ public class TestArrayInt {
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Set up time "+time+" milliseconds");
+		System.out.println("list size: "+arrlst.size());
 		
 		//test get function
 		start = System.currentTimeMillis();
@@ -110,7 +114,7 @@ public class TestArrayInt {
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Remove "+time);
-		
+		System.out.println("list size: "+arrlst.size());
 		
 		
 		System.out.println("******Test MyArryList******");
@@ -120,6 +124,7 @@ public class TestArrayInt {
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Set up time "+time+" milliseconds");
+		System.out.println("list size: "+marlst.size());
 		
 		//test get function
 		start = System.currentTimeMillis();
@@ -129,14 +134,13 @@ public class TestArrayInt {
 		System.out.println("Search time "+time);
 		
 		
-		
-		//test get function
+		//test remove function
 		start = System.currentTimeMillis();
 		TestRemove(marlst);
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Remove time "+time);
-		
+		System.out.println("list size: "+marlst.size());
 		
 		
 	}
