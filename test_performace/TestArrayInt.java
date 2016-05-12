@@ -13,28 +13,22 @@ public class TestArrayInt {
 	 * @return array
 	 * @throws FileNotFoundException
 	 */
-	public static ArrayListInt BuildArrayFromFile(ArrayListInt arr,String filename) throws FileNotFoundException{
+	public static ArrayListInt BuildArrayFromFile(ArrayListInt arr,ArrayList<Integer> list){
 		
-		Scanner sc=new Scanner(new FileReader(filename));
-		while(sc.hasNextInt()){
-			int temp=sc.nextInt();
-			arr.add(temp);
+		for(Integer i:list){
+			arr.add(i);
 		}
-		//System.out.println("list size: "+arr.size());
-		if(sc!=null) sc.close();
 		return arr;
 		
 	}
 	
-	public static ArrayList<Integer> BuildArrayFromFile(ArrayList<Integer> arr,String filename) throws FileNotFoundException{
+	
+	
+	public static ArrayList<Integer> BuildArrayFromFile(ArrayList<Integer> arr,ArrayList<Integer> list){
 		
-		Scanner sc=new Scanner(new FileReader(filename));
-		while(sc.hasNextInt()){
-			int temp=sc.nextInt();
-			arr.add(temp);
+		for(Integer i:list){
+			arr.add(i);
 		}
-		//System.out.println("list size: "+arr.size());
-		if(sc!=null) sc.close();
 		return arr;
 	}
 	/*
@@ -47,9 +41,6 @@ public class TestArrayInt {
 			arr.get(rb.nextInt(len));
 		}
 	}
-	/*
-	 * test get function performace
-	 */
 	public static void TestGet(ArrayListInt arr){
 		int len=arr.size();
 		Random rb=new Random(1);//use same seed
@@ -59,25 +50,21 @@ public class TestArrayInt {
 	}
 	/**
 	 * test removie method 
-	 * @param arr the arraylist to be test
+	 * @param arr
 	 */
 	public static void TestRemove(ArrayList<Integer> arr){
 		int len=arr.size();
 		for(int i=0;i<len;i++){
 			arr.remove(arr.size()-1);
 		}
-		
+		//System.out.println("list size: "+arr.size());
 	}
-	/**
-	 * test removie method 
-	 * @param arr the arraylist to be test
-	 */
 	public static void TestRemove(ArrayListInt arr){
 		int len=arr.size();
 		for(int i=0;i<len;i++){
 			arr.remove(arr.size()-1);
 		}
-		
+		//System.out.println("list size: "+arr.size());
 	}
 	
 	
@@ -95,12 +82,22 @@ public class TestArrayInt {
 		String pth8 = "words_50k.txt";
 		String pth9 = "words_100k.txt";
 		String pth10= "words_230k.txt";
+		ArrayList<Integer> listInt= new ArrayList<Integer>();
+		
+		Scanner sc=new Scanner(new FileReader(pth2));
+		while(sc.hasNextInt()){
+			int temp=sc.nextInt();
+			listInt.add(temp);
+		}
+		
+		if(sc!=null) sc.close();
+		
 		double start, end, time;
 		
 		System.out.println("******Test System ArryList******");
 		//test add function
 		start = System.currentTimeMillis();
-		ArrayList<Integer> arrlst = BuildArrayFromFile(new ArrayList<Integer>(), pth2);
+		ArrayList<Integer> arrlst = BuildArrayFromFile(new ArrayList<Integer>(), listInt);
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Set up time "+time+" milliseconds");
@@ -113,6 +110,8 @@ public class TestArrayInt {
 		time = end - start;
 		System.out.println("Search time "+time);
 		
+		
+		
 		//test remove function
 		start = System.currentTimeMillis();
 		TestRemove(arrlst);
@@ -121,10 +120,11 @@ public class TestArrayInt {
 		System.out.println("Remove "+time);
 		System.out.println("list size: "+arrlst.size());
 		
+		
 		System.out.println("******Test MyArryList******");
 		//test add function
 		start = System.currentTimeMillis();
-		ArrayListInt marlst = BuildArrayFromFile(new ArrayListInt(),pth2);
+		ArrayListInt marlst = BuildArrayFromFile(new ArrayListInt(),listInt);
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Set up time "+time+" milliseconds");
@@ -136,6 +136,7 @@ public class TestArrayInt {
 		end = System.currentTimeMillis();
 		time = end - start;
 		System.out.println("Search time "+time);
+		
 		
 		//test remove function
 		start = System.currentTimeMillis();
